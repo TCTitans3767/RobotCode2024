@@ -161,7 +161,7 @@ public class Shooter extends SubsystemBase{
         positionMotor = new TalonFX(Constants.Shooter.rotationCANID);
 
         absoluteEncoder = new DutyCycleEncoder(2);
-        absoluteEncoder.setDistancePerRotation(Constants.Shooter.absoluteConversionFactor);
+        // absoluteEncoder.setDistancePerRotation(Constants.Shooter.absoluteConversionFactor);
         
         // positionController = new ProfiledPIDController(
         //     Constants.Shooter.positionP,
@@ -291,7 +291,9 @@ public class Shooter extends SubsystemBase{
     }
 
     public double getAbsolutePosition() {
-        return -(absoluteEncoder.getAbsolutePosition() - Constants.Shooter.absoluteOffset);
+        return -((absoluteEncoder.get() * Constants.Intake.absoluteConversionFactor) - Constants.Intake.absoluteOffset);
+
+        // return -(absoluteEncoder.getAbsolutePosition() - Constants.Shooter.absoluteOffset);
     }
 
     public void resetPosition() {

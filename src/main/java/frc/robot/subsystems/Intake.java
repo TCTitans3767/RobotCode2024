@@ -81,7 +81,7 @@ public class Intake extends SubsystemBase{
         rollerMotor.setInverted(false);
 
         absoluteEncoder = new DutyCycleEncoder(1);
-        absoluteEncoder.setDistancePerRotation(Constants.Intake.absoluteConversionFactor);
+        // absoluteEncoder.setDistancePerRotation(Constants.Intake.absoluteConversionFactor);
 
         positionLeftMotor = new TalonFX(Constants.Intake.positionLeftCANID);
         positionConfig = new TalonFXConfiguration();
@@ -190,7 +190,8 @@ public class Intake extends SubsystemBase{
 
     public double getAbsolutePosition() {
         // return absoluteEncoder.getAbsolutePosition() - 0;
-        return absoluteEncoder.getAbsolutePosition() - Constants.Intake.absoluteOffset;
+        // return absoluteEncoder.getAbsolutePosition() - Constants.Intake.absoluteOffset;
+        return (absoluteEncoder.get() * Constants.Intake.absoluteConversionFactor) - Constants.Intake.absoluteOffset;
     }
 
     public boolean areEncodersSynched() {
