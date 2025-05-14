@@ -1,10 +1,10 @@
 package frc.robot.subsystems;
 
-import com.pathplanner.lib.auto.AutoBuilder;
-import com.pathplanner.lib.path.PathConstraints;
-import com.pathplanner.lib.util.HolonomicPathFollowerConfig;
-import com.pathplanner.lib.util.PIDConstants;
-import com.pathplanner.lib.util.ReplanningConfig;
+// import com.pathplanner.lib.auto.AutoBuilder;
+// import com.pathplanner.lib.path.PathConstraints;
+// import com.pathplanner.lib.util.HolonomicPathFollowerConfig;
+// import com.pathplanner.lib.util.PIDConstants;
+// import com.pathplanner.lib.util.ReplanningConfig;
 
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Pose3d;
@@ -12,10 +12,10 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Rotation3d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
-import edu.wpi.first.math.util.Units;
+// import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.AddressableLED;
 import edu.wpi.first.wpilibj.AddressableLEDBuffer;
-import edu.wpi.first.wpilibj.DriverStation;
+// import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -62,7 +62,7 @@ public class Drivetrain extends SubsystemBase {
             throw new RuntimeException(e);
         }
 
-        setupPathPlanner();
+        // setupPathPlanner();
 
         leds.setLength(ledBuffer.getLength());
         for (int i = 0; i < 48; i++) {
@@ -77,31 +77,31 @@ public class Drivetrain extends SubsystemBase {
         SmartDashboard.putNumber("heading", swerveDrive.getOdometryHeading().getDegrees());
     }
 
-    public void setupPathPlanner() {
-        AutoBuilder.configureHolonomic(
-            this::getPose, // Robot pose supplier
-            this::resetOdometry, // Method to reset odometry (will be called if your auto has a starting pose)
-            this::getRobotVelocity, // ChassisSpeeds supplier (robot relative)
-            this::driveRobotOriented, // Method that will drive robot given robot relative speeds
-            new HolonomicPathFollowerConfig(
-                new PIDConstants(6.5, 0, 0.002), // Translation PID
-                new PIDConstants( // Rotation PID
-                    5, 
-                    0.0,
-                    0.0), 
-                5.15, // Max module speed in m/s
-                swerveDrive.swerveDriveConfiguration.getDriveBaseRadiusMeters(), // Drive base radius in meters
-                new ReplanningConfig() // Default replanning config, see docs for options
-            ),
-            () -> {
-                // Boolean supplier that controls when the path will be mirrored for the red alliance
-                // This will flip the path being followed to the red side of the field.
-                // THE ORIGIN WILL REMAIN ON THE BLUE SIDE
-                var alliance = DriverStation.getAlliance();
-                return alliance.isPresent() ? alliance.get() == DriverStation.Alliance.Red : false;
-            },
-            this);
-    }
+    // public void setupPathPlanner() {
+    //     AutoBuilder.configureHolonomic(
+    //         this::getPose, // Robot pose supplier
+    //         this::resetOdometry, // Method to reset odometry (will be called if your auto has a starting pose)
+    //         this::getRobotVelocity, // ChassisSpeeds supplier (robot relative)
+    //         this::driveRobotOriented, // Method that will drive robot given robot relative speeds
+    //         new HolonomicPathFollowerConfig(
+    //             new PIDConstants(6.5, 0, 0.002), // Translation PID
+    //             new PIDConstants( // Rotation PID
+    //                 5, 
+    //                 0.0,
+    //                 0.0), 
+    //             5.15, // Max module speed in m/s
+    //             swerveDrive.swerveDriveConfiguration.getDriveBaseRadiusMeters(), // Drive base radius in meters
+    //             new ReplanningConfig() // Default replanning config, see docs for options
+    //         ),
+    //         () -> {
+    //             // Boolean supplier that controls when the path will be mirrored for the red alliance
+    //             // This will flip the path being followed to the red side of the field.
+    //             // THE ORIGIN WILL REMAIN ON THE BLUE SIDE
+    //             var alliance = DriverStation.getAlliance();
+    //             return alliance.isPresent() ? alliance.get() == DriverStation.Alliance.Red : false;
+    //         },
+    //         this);
+    // }
 
     public Command aimChassis(Translation2d target) {
         double faceLocationHeading = Math.atan2(
@@ -120,21 +120,21 @@ public class Drivetrain extends SubsystemBase {
         swerveDrive.setHeadingCorrection(headingCorrection);
     }
 
-    public Command driveToPose(Pose2d pose)
-    {
-        // Create the constraints to use while pathfinding
-        PathConstraints constraints = new PathConstraints(
-            swerveDrive.getMaximumVelocity(), 4.0,
-            swerveDrive.getMaximumAngularVelocity(), Units.degreesToRadians(720));
+    // public Command driveToPose(Pose2d pose)
+    // {
+    //     // Create the constraints to use while pathfinding
+    //     PathConstraints constraints = new PathConstraints(
+    //         swerveDrive.getMaximumVelocity(), 4.0,
+    //         swerveDrive.getMaximumAngularVelocity(), Units.degreesToRadians(720));
 
-        // Since AutoBuilder is configured, we can use it to build pathfinding commands
-        return AutoBuilder.pathfindToPose(
-            pose,
-            constraints,
-            0.0, // Goal end velocity in meters/sec
-            0.0 // Rotation delay distance in meters. This is how far the robot should travel before attempting to rotate.
-                                     );
-    }
+    //     // Since AutoBuilder is configured, we can use it to build pathfinding commands
+    //     return AutoBuilder.pathfindToPose(
+    //         pose,
+    //         constraints,
+    //         0.0, // Goal end velocity in meters/sec
+    //         0.0 // Rotation delay distance in meters. This is how far the robot should travel before attempting to rotate.
+    //                                  );
+    // }
 
     /**
      * The primary method for controlling the drivebase.  Takes a {@link Translation2d} and a rotation rate, and
