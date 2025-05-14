@@ -4,11 +4,13 @@ import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 import com.revrobotics.AbsoluteEncoder;
-import com.revrobotics.CANSparkMax;
+import com.revrobotics.spark.SparkMax;
+import com.revrobotics.spark.config.SparkMaxConfig;
 import com.revrobotics.RelativeEncoder;
-import com.revrobotics.CANSparkBase.IdleMode;
-import com.revrobotics.CANSparkLowLevel.MotorType;
-import com.revrobotics.SparkAbsoluteEncoder.Type;
+import com.revrobotics.spark.SparkLowLevel.MotorType;
+import com.revrobotics.spark.SparkBase.PersistMode;
+import com.revrobotics.spark.SparkBase.ResetMode;
+import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DriverStation;
@@ -27,9 +29,9 @@ public class Climber extends SubsystemBase{
 
         return instance;
     }
-    
-    private final CANSparkMax leader;
-    private final CANSparkMax follower;
+
+    private final SparkMax leader, follower;
+    private final SparkMaxConfig leaderConfig, followerConfig;
 
     // private final AbsoluteEncoder absoluteEncoder;
     private final RelativeEncoder encoder;
@@ -45,24 +47,40 @@ public class Climber extends SubsystemBase{
         // climbMotor.setNeutralMode(NeutralModeValue.Brake);
         // climbMotor.setInverted(false);
         // climbMotor.getConfigurator().apply(config);
-        leader = new CANSparkMax(Constants.Climber.leaderID, MotorType.kBrushless);
-        leader.restoreFactoryDefaults();
-        leader.setIdleMode(IdleMode.kBrake);
-        leader.setSmartCurrentLimit(100);
-        leader.setInverted(false);
 
-        follower = new CANSparkMax(Constants.Climber.followerID, MotorType.kBrushless);
-        follower.restoreFactoryDefaults();
-        follower.setIdleMode(IdleMode.kBrake);
-        follower.setSmartCurrentLimit(100);
-        follower.setInverted(false);
-        follower.follow(leader);
+        // leader = new CANSparkMax(Constants.Climber.leaderID, MotorType.kBrushless);
+        // leader.restoreFactoryDefaults();
+        // leader.setIdleMode(IdleMode.kBrake);
+        // leader.setSmartCurrentLimit(100);
+        // leader.setInverted(false);
+
+        // follower = new CANSparkMax(Constants.Climber.followerID, MotorType.kBrushless);
+        // follower.restoreFactoryDefaults();
+        // follower.setIdleMode(IdleMode.kBrake);
+        // follower.setSmartCurrentLimit(100);
+        // follower.setInverted(false);
+        // follower.follow(leader);
+
+        leader = new SparkMax(Constants.Climber.leaderID, MotorType.kBrushless);
+        leaderConfig = new SparkMaxConfig();
+        leaderConfig.idleMode(IdleMode.kBrake);
+        leaderConfig.smartCurrentLimit(100);
+        leaderConfig.inverted(false);
+        leaderConfig.encoder.positionConversionFactor(Constants.Climber.conversionfactor);
+        leader.configure(leaderConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+
+        follower = new SparkMax(Constants.Climber.followerID, MotorType.kBrushless);
+        followerConfig = new SparkMaxConfig();
+        followerConfig.idleMode(IdleMode.kBrake);
+        followerConfig.smartCurrentLimit(100);
+        followerConfig.inverted(false);
+        followerConfig.follow(Constants.Climber.leaderID);
+        follower.configure(followerConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
 
         // absoluteEncoder = leader.getAbsoluteEncoder(Type.kDutyCycle);
 
         encoder = leader.getEncoder();
-        encoder.setPositionConversionFactor(Constants.Climber.conversionfactor);
-
+        
         limitSwitch = new DigitalInput(4);
         // encoder.setPosition(absoluteEncoder.getPosition());
 

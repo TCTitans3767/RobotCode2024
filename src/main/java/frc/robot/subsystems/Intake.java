@@ -43,7 +43,7 @@ public class Intake extends SubsystemBase{
     private ControlState controlState = ControlState.AUTOMATIC;
     private PositionState goalState = PositionState.STOW;
     private PositionState lastState = PositionState.STOW;
-    // private PositionState lastGoalState = PositionState.STOW;
+    private PositionState lastGoalState = PositionState.STOW;
     private double targetOpenLoopOutput = 0;
     private double targetRollerSpeed = 0;
     private boolean areEncodersSynched = false;
