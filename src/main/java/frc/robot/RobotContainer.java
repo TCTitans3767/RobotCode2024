@@ -77,7 +77,7 @@ public class RobotContainer {
   PS5Controller driver = new PS5Controller(0);
   PS5Controller operator = new PS5Controller(1);
 
-  GenericHID guitar = new GenericHID(2);
+  // GenericHID guitar = new GenericHID(2);
 
   SendableChooser<Command> autoChooser;
 
@@ -163,13 +163,13 @@ public class RobotContainer {
     new Trigger(() -> operator.getRawButton(14)).onTrue(new SetIntakePosition(Intake.PositionState.GROUND).alongWith(new SetShooterPosition(Shooter.PositionState.CLIMB)));
     new Trigger(() -> operator.getRawButton(10)).onTrue(new SetIntakePosition(Intake.PositionState.STOW).alongWith(new SetShooterPosition(Shooter.PositionState.AMP)));
     new Trigger(() -> operator.getRawButton(3)).onTrue(new InstantCommand(() -> {intake.setRollerSpeed(0.2); shooter.setFeederSpeed(0.2); shooter.setShootSpeed(-2);}).andThen(new WaitCommand(0.4)).andThen(new WaitUntilCommand(() -> intake.getTorqueCurrent() < 25)).andThen(new InstantCommand(() -> {intake.setRollerSpeed(0.0); shooter.setFeederSpeed(0.0); shooter.setShootSpeed(0); SmartDashboard.putBoolean("Intake Ring", false); SmartDashboard.putBoolean("Ready to Shoot", true);})));
-    // guitar controls
-    new Trigger(() -> guitar.getRawButton(3)).whileTrue(new InstantCommand(() -> lights.setColor("Red")));
-    new Trigger(() -> guitar.getRawButton(9)).onTrue(new InstantCommand(() -> lights.setColor("Orange")));
-    new Trigger(() -> guitar.getRawButton(4)).onTrue(new InstantCommand(() -> lights.setColor("Yellow")));
-    new Trigger(() -> guitar.getRawButton(2)).onTrue(new InstantCommand(() -> lights.setColor("Green")));
-    new Trigger(() -> guitar.getRawButton(1)).onTrue(new InstantCommand(() -> lights.setColor("Blue")));
-    new Trigger(() -> guitar.getRawButton(5)).onTrue(new InstantCommand(() -> lights.setColor("Violet")));
+    // // guitar controls
+    // new Trigger(() -> guitar.getRawButton(3)).whileTrue(new InstantCommand(() -> lights.setColor("Red")));
+    // new Trigger(() -> guitar.getRawButton(9)).onTrue(new InstantCommand(() -> lights.setColor("Orange")));
+    // new Trigger(() -> guitar.getRawButton(4)).onTrue(new InstantCommand(() -> lights.setColor("Yellow")));
+    // new Trigger(() -> guitar.getRawButton(2)).onTrue(new InstantCommand(() -> lights.setColor("Green")));
+    // new Trigger(() -> guitar.getRawButton(1)).onTrue(new InstantCommand(() -> lights.setColor("Blue")));
+    // new Trigger(() -> guitar.getRawButton(5)).onTrue(new InstantCommand(() -> lights.setColor("Violet")));
   }
 
 
