@@ -49,34 +49,33 @@ public class NoteLight extends SubsystemBase {
 
     @Override
     public void periodic() {
-      String colorCode = "";
+      // String colorCode = "";
 
-      switch (color) {
-        case "Red":
-          colorCode = "R";
-          break;
-         case "Orange":
-          colorCode = "O";
-          break;
-          case "Yellow":
-          colorCode = "Y";
-          break;
-          case "Green":
-          colorCode = "G";
-          break;
-          case "Blue":
-          colorCode = "B";
-          break;
-          case "Violet":
-          colorCode = "P";
-          break;
-        default:
-          colorCode = "O";
-          break;
-      }
+      // switch (color) {
+      //   case "Red":
+      //     colorCode = "R";
+      //     break;
+      //    case "Orange":
+      //     colorCode = "O";
+      //     break;
+      //     case "Yellow":
+      //     colorCode = "Y";
+      //     break;
+      //     case "Green":
+      //     colorCode = "G";
+      //     break;
+      //     case "Blue":
+      //     colorCode = "B";
+      //     break;
+      //     case "Violet":
+      //     colorCode = "P";
+      //     break;
+      //   default:
+      //     colorCode = "O";
+      //     break;
+      // }
 
-      
-      noteLight.writeString("P");
+      noteLight.writeString("G"); // Green
       
       SmartDashboard.putBoolean("Color/" + color, true);
       SmartDashboard.putBoolean("Color/" + lastColor, false);

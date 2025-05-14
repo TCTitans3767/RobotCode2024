@@ -46,7 +46,7 @@ import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.NoteLight;
 import frc.robot.subsystems.Shooter;
-import frc.robot.subsystems.Vision;
+// import frc.robot.subsystems.Vision;
 // import frc.robot.subsystems.Vision;
 import frc.robot.utils.Constants;
 import frc.robot.utils.PhotonNoteDetection;
@@ -66,7 +66,7 @@ public class RobotContainer {
   }
   
   public final NoteLight lights = new NoteLight();
-  public final Vision vision = new Vision();
+  // public final Vision vision = new Vision();
   //public final PhotonNoteDetection noteDetection = new PhotonNoteDetection(vision.getRingCam());
   public final Drivetrain drivetrain = Drivetrain.getInstance();
   private final Intake intake = Intake.getInstance();
@@ -112,8 +112,8 @@ public class RobotContainer {
     NamedCommands.registerCommand("Prepare Far Shot", new PrepareFarShotAuton());
     NamedCommands.registerCommand("Shoot", new ShootAuton());
     NamedCommands.registerCommand("Intake And Shoot", new IntakeAndShoot());
-    NamedCommands.registerCommand("Turn Off Apriltags", new InstantCommand(() -> vision.turnOffAprilTags()));
-    NamedCommands.registerCommand("Turn On Apriltags", new InstantCommand(() -> vision.turnOnAprilTags()));
+    // NamedCommands.registerCommand("Turn Off Apriltags", new InstantCommand(() -> vision.turnOffAprilTags()));
+    // NamedCommands.registerCommand("Turn On Apriltags", new InstantCommand(() -> vision.turnOnAprilTags()));
     
     autoChooser = AutoBuilder.buildAutoChooser();
     SmartDashboard.putData("Auto Chooser", autoChooser);
